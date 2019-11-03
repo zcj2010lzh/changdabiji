@@ -1,0 +1,7 @@
+<resources>
+    <paths>
+        <external-path
+            name="gallery_photos"
+            path=""/>
+    </paths>
+</resources>

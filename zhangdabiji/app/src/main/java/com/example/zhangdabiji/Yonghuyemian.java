@@ -41,13 +41,14 @@ public class Yonghuyemian extends Fragment {
     public Bitmap bitmap;
     private Uri imguri;
       private SharedPreferences preferences;
-      private  SharedPreferences.Editor editor;
+      private  SharedPreferences.Editor editor;;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_yonghuyemian, container, false);
         NavigationView navigationView = view.findViewById(R.id.yonghuyemian_navigation);
         Menu menu = navigationView.getMenu();
+
         //menu.se
         head=navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -56,6 +57,9 @@ public class Yonghuyemian extends Fragment {
                 switch (menuItem.getItemId()) {
                     case R.id.dengluzhuce:
                         Intent intent = new Intent(getContext(), ZhuCe.class);
+                        editor=PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                        editor.putBoolean("yonghuiszhidongdenglu",false);
+                        editor.apply();
                         startActivity(intent);
                         getActivity().onBackPressed();
                         break;
@@ -77,9 +81,12 @@ public class Yonghuyemian extends Fragment {
         yonghuyemian_circle = head. findViewById(R.id.yonghuyemian_circleView);
         preferences= PreferenceManager.getDefaultSharedPreferences(getContext());
         editor=PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-        yonghuyemian_circle.setImageResource(R.drawable.touxiang);
         imagePath= preferences.getString("imgsource","");
-        Toast.makeText(getContext(), ""+preferences.getString("imgsource",""), Toast.LENGTH_SHORT).show();
+        if (yonghuyemian_circle.getBackground()==null)
+            yonghuyemian_circle.setImageResource(R.drawable.touxiang);
+        if (!imagePath.equals(""))
+         displayImage(imagePath);
+            //Toast.makeText(getContext(), ""+preferences.getString("imgsource",""), Toast.LENGTH_SHORT).show();
         genghuantouxiang = head. findViewById(R.id.yonghuyemian_genhuantouxiang);
         genghuantouxiang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +149,8 @@ public class Yonghuyemian extends Fragment {
         else  if ("file".equalsIgnoreCase(uri.getScheme())){
             imagePath=uri.getPath();
         }
-
+        editor.putString("imgsource",imagePath);
+        editor.apply();
         displayImage(imagePath);
     }
     private  String getImagePath(Uri uri,String selection){
@@ -160,10 +168,10 @@ public class Yonghuyemian extends Fragment {
         if (imagePath != null) {
             xx = imagePath;
             bitmap = BitmapFactory.decodeFile(imagePath);
-            editor.putString("imgsource",imagePath);
+
            // Toast.makeText(getContext(), ""+imagePath, Toast.LENGTH_SHORT).show();
            // imagePath= preferences.getString("imgsource","");
-            Toast.makeText(getContext(), ""+preferences.getString("imgsource",""), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), ""+preferences.getString("imgsource",""), Toast.LENGTH_SHORT).show();
             yonghuyemian_circle.setImageBitmap(bitmap);
         } else {
             Toast.makeText(getContext(), "failed to get image", Toast.LENGTH_SHORT).show();

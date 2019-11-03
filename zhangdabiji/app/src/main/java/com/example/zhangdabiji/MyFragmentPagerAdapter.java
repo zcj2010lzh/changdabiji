@@ -1,7 +1,5 @@
 package com.example.zhangdabiji;
 
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-    private final int PAGER_COUNT = 2;
+    private final int PAGER_COUNT = 3;
     private  List<Fragment>  fragmentList=new ArrayList<>();
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
@@ -26,7 +24,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public Object instantiateItem(ViewGroup container, int position) {
         this.fragmentList.add(new WendangYemian());
+        this.fragmentList.add(new  paiming());
         this.fragmentList.add(new Yonghuyemian());
+
         return super.instantiateItem(container,position);
     }
 
@@ -45,6 +45,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 break;
             case MainActivity.PAGE_TWO:
                 fragment = fragmentList.get(1);
+                break;
+            case MainActivity.PAGE_THREE:
+                fragment = fragmentList.get(2);
                 break;
         }
         return fragment;

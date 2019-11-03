@@ -17,48 +17,6 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/yonghu_yonghuming">
-           <TextView
-               android:layout_weight="3"
-               android:text="职务 "
-               android:textSize="20sp"
-               android:gravity="center"
-               android:textColor="#000000"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:id="@+id/yonghuming_txt"/>
-           <AutoCompleteTextView
-               android:layout_marginRight="36dp"
-               android:dropDownWidth="wrap_content"
-               android:completionThreshold="1"
-               android:layout_weight="10"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:id="@+id/yonghudenglu_zhiwu" />
-    </TableRow>
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yonghu_mima">
-        <TextView
-            android:layout_weight="3"
-            android:text="密码 "
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/yonghu_mima_txt"/>
-        <EditText
-            android:layout_marginRight="36dp"
-            android:layout_weight="10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/yonghudenglu_mima_edit" />
-    </TableRow>
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/yonghu_yonghuxuehao">
         <TextView
             android:layout_weight="3"
@@ -79,22 +37,47 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/yonghu_mima">
+        <TextView
+            android:layout_weight="3"
+            android:text="密码 "
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/yonghu_mima_txt"/>
+        <EditText
+            android:inputType="textPassword"
+            android:layout_marginRight="36dp"
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/yonghudenglu_mima_edit" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/yonghu_yonghunianji">
         <TextView
             android:layout_weight="3"
-            android:text="年级 "
+            android:text="邮箱"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="#000000"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/yonghunianji_txt"/>
+
         <EditText
-            android:layout_marginRight="36dp"
-            android:layout_weight="10"
+            android:hint="xxx@xx.com"
+            android:id="@+id/yonghunyouxiang_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/yonghunianji_edit" />
+            android:layout_marginRight="36dp"
+            android:layout_weight="10"
+            android:inputType="textEmailAddress" />
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
@@ -102,19 +85,19 @@
        >
         <TextView
             android:layout_weight="3"
-            android:text="名字 "
+            android:text="昵称"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="#000000"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/yonghumingzhi_txt"/>
+            android:id="@+id/yonghunicheng_txt"/>
         <EditText
             android:layout_marginRight="36dp"
             android:layout_weight="10"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/yonghumingzhi_edit" />
+            android:id="@+id/yonghunicheng_edit" />
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
@@ -134,6 +117,7 @@
             android:dropDownWidth="wrap_content"
             android:completionThreshold="1"
             android:layout_weight="10"
+             android:dropDownHeight="wrap_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/yonghudenglu_zuming" />
@@ -143,33 +127,12 @@
        android:layout_width="match_parent"
        android:id="@+id/yonghu_yonghuxinbie"
        android:layout_height="wrap_content">
-           <RadioGroup
-               android:id="@+id/nu"
-              android:layout_centerInParent="true"
-               android:orientation="horizontal"
-               android:layout_height="wrap_content"
-               android:layout_width="wrap_content">
-                   <RadioButton
-                       android:text="男"
-                       android:id="@+id/yonghudenglu_nan"
-                       android:layout_marginRight="0dp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-               <RadioButton
-                   android:id="@+id/yonghudenglu_nu"
-                   android:layout_marginRight="0dp"
-                   android:text="女"
-                   android:layout_weight="3"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content" />
-
-           </RadioGroup>
 
    </RelativeLayout>
 </TableLayout>
     <Button
         android:text="注册"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

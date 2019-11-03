@@ -5,29 +5,86 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical">
-    <androidx.viewpager.widget.ViewPager
-        android:layout_weight="1"
-        android:id="@+id/vpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        />
-<LinearLayout
-    android:layout_gravity="center"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
+   <FrameLayout
+       android:layout_weight="1"
+       android:layout_width="match_parent"
+       android:layout_height="0dp">
+       <androidx.viewpager.widget.ViewPager
+           android:id="@+id/vpager"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           />
+       <TextView
+           android:id="@+id/kejian"
+           android:visibility="invisible"
+           android:layout_gravity="center"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="下拉刷新"
+            android:textSize="12sp"
+           android:textColor="#7A7171"></TextView>
+   </FrameLayout>
+<FrameLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <Button
-        android:text="文档"
-        android:id="@+id/main_wendang"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/main_l1"
+        android:visibility="invisible"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <Button
-        android:background="#FAF8F8"
-        android:text="我的"
-        android:id="@+id/main_wode"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/main_quanxuan"
+            android:layout_marginLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全选"></CheckBox>
+
+        <TextView
+            android:id="@+id/main_sanchu"
+            android:textSize="15sp"
+            android:layout_marginLeft="220dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            android:textColor="#000000"></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/main_l2"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-</LinearLayout>
+        android:layout_height="wrap_content">
+        <Button
+            android:minHeight="45dp"
+            android:minWidth="65dp"
+            android:layout_marginRight="10dp"
+            android:text="文档"
+            android:id="@+id/main_wendang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:background="#0000"
+            android:minHeight="41dp"
+            android:minWidth="65dp"
+            android:text="上交概述"
+            android:id="@+id/main_paiming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:background="#0000"
+            android:minHeight="45dp"
+            android:minWidth="65dp"
+            android:layout_marginLeft="10dp"
+            android:text="我的"
+            android:id="@+id/main_wode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+</FrameLayout>
 </LinearLayout>

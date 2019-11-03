@@ -1,9 +1,15 @@
 package com.example.zhangdabiji;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
+import androidx.core.content.FileProvider;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by FengJD on 2016/11/10.
@@ -92,14 +98,15 @@ public class OpenFiles {
 
 
     //android获取一个用于打开Word文件的intent
-   public static Intent getWordFileIntent(String Path)
+   public static Intent getWordFileIntent(String Path, Context context)
     {
        File file = new File(Path);
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(file);
+        Uri uri = FileProvider.getUriForFile(context,"com.example.zhangdabiji.fileprovider",file);
         intent.setDataAndType(uri, "application/msword");
+        grantUriPermission(context,uri,intent);
         //intent.setDataAndType(uri, "application/vnd.android.package-archive");
         return intent;}
        /* public static Intent getWordFileIntent( String param ){
@@ -111,7 +118,14 @@ public class OpenFiles {
         intent.setDataAndType(uri, "application/msword");
         return intent;
     }*/
-
+       private static void grantUriPermission(Context context, Uri fileUri, Intent intent) {
+           List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+           for (ResolveInfo resolveInfo : resInfoList) {
+               String packageName = resolveInfo.activityInfo.packageName;
+               context.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION |
+                       Intent.FLAG_GRANT_READ_URI_PERMISSION);
+           }
+       }
     //android获取一个用于打开Excel文件的intent
     public static Intent getExcelFileIntent(String Path)
     {

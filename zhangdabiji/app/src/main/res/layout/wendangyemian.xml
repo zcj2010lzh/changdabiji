@@ -4,17 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".WendangYemian">
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-     android:id="@+id/wendangyemian_sperefresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/wendangyemian_sperefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_recycler">
+        android:layout_height="match_parent"
+        android:background="#0000"
+        app:srlPrimaryColor="#0000"
+        app:srlEnablePreviewInEditMode="true">
+        <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+        <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_recycler">
+        </androidx.recyclerview.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    </androidx.recyclerview.widget.RecyclerView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </LinearLayout>

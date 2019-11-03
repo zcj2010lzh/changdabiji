@@ -4,9 +4,16 @@
     android:menuCategory="system">
     <item
         android:id="@+id/dengluzhuce"
-        android:title="登录/注册"></item>
-    <item android:title="文档在线编辑"></item>
+        android:title="登录/注册">
+
+    </item>
+    <item
+        android:title="文档在线编辑">
+
+    </item>
     <item android:title="查看其他文档"
-        android:id="@+id/menu_chakanqitawendang"></item>
+        android:id="@+id/menu_chakanqitawendang">
+
+    </item>
 </group>
 </menu>

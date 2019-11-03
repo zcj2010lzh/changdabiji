@@ -1,39 +1,39 @@
 package com.example.zhangdabiji;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-public class Zhedieshitu extends AppCompatActivity {
 
+public class paiming extends Fragment {
     private ArrayList<Group> gData = null;
     private ArrayList<ArrayList<Item>> iData = null;
     private ArrayList<Item> lData = null;
-    private Context mContext;
     private ExpandableListView exlist_lol;
     private MyBaseExpandableListAdapter myAdapter ;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zhedieshitu);
-        mContext = Zhedieshitu.this;
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_paiming,container,false);
 
         //数据准备
         gData = new ArrayList<Group>();
         iData = new ArrayList<ArrayList<Item>>();
-        gData.add(new Group("AD"));
-         gData.add(new Group("AP"));
-        gData.add(new Group("zx"));
-
+        gData.add(new Group("长大在线(18级)"));
+        gData.add(new Group("安卓组"));
+        gData.add(new Group("PHP组"));
+        gData.add(new Group("UI组"));
+        gData.add(new Group("运维组"));
+        gData.add(new Group("运营组"));
+        gData.add(new Group("前端组"));
         lData = new ArrayList<Item>();
 
         lData.add(new Item("剑圣"));
@@ -57,26 +57,17 @@ public class Zhedieshitu extends AppCompatActivity {
         lData.add(new Item("龙女"));
         lData.add(new Item("狗熊"));
         iData.add(lData);
-        exlist_lol = findViewById(R.id.exlist_lol1);
+        exlist_lol = view. findViewById(R.id.paiming_exlist_lol1);
         //为列表设置点击事件
-        myAdapter=new MyBaseExpandableListAdapter(gData,iData, Zhedieshitu.this);
+        myAdapter=new MyBaseExpandableListAdapter(gData,iData, getContext());
         exlist_lol.setAdapter(myAdapter);
-        exlist_lol.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
+        exlist_lol. setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent=new Intent(v.getContext(),WendangJiazaiyemian.class);
-                intent.putExtra("fileurl",iData.get(groupPosition).get(childPosition).getiName());
-                startActivity(intent);
-                return false;
+                Toast.makeText(getContext(), "你点击了：" + iData.get(groupPosition).get(childPosition).getiName(), Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
-
-
+    return view;}
     }
-    /*
-    *     <ImageView
-        android:id="@+id/img_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:focusable="false"/>*/
-}
+

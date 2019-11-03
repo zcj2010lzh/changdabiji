@@ -8,20 +8,37 @@
     android:id="@+id/item_layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+    <CheckBox
+        android:id="@+id/file_item_check"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></CheckBox>
     <ImageView
         android:id="@+id/file_item_img"
         android:layout_width="50dp"
         android:layout_margin="12dp"
         android:layout_gravity="center"
         android:layout_height="45dp" />
-    <TextView
-        android:layout_marginLeft="0dp"
-        android:gravity="center"
-        android:textSize="12sp"
-        android:layout_marginTop="12dp"
-        android:id="@+id/file_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp" />
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent">
+      <TextView
+          android:layout_marginLeft="0dp"
+          android:textSize="10sp"
+          android:layout_marginTop="15dp"
+          android:id="@+id/file_item_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+      <TextView
+          android:layout_marginLeft="6dp"
+          android:textSize="8sp"
+          android:layout_marginTop="4dp"
+          android:id="@+id/file_item_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+  </LinearLayout>
 </LinearLayout>
 </LinearLayout>

@@ -26,8 +26,8 @@ public class FileUtil {
 
     public static int getFileType(String path) {
         path = path.toLowerCase();//变成小写
-        if (path.endsWith(".type_doc") || path.endsWith(".docx") || path.endsWith(".xls") || path.endsWith(".xlsx")
-                || path.endsWith(".type_ppt") || path.endsWith(".pptx")) {
+        if (path.endsWith(".doc") /*|| path.endsWith(".docx") || path.endsWith(".xls") || path.endsWith(".xlsx")
+                || path.endsWith(".type_ppt") || path.endsWith(".pptx")*/) {
             return TYPE_DOC;
         }else if (path.endsWith(".apk")) {
             return TYPE_APK;
@@ -45,7 +45,7 @@ public class FileUtil {
         int iconId = R.mipmap.unknow_file_icon;
         if (path.endsWith(".type_txt")){
             iconId = R.mipmap.type_txt;
-        }else if(path.endsWith(".type_doc") || path.endsWith(".docx")){
+        }else if(path.endsWith(".doc") || path.endsWith(".docx")){
             iconId = R.mipmap.type_doc;
         }else if(path.endsWith(".xls") || path.endsWith(".xlsx")){
             iconId = R.mipmap.type_xls;
@@ -93,12 +93,13 @@ public class FileUtil {
         return "";
     }
     /**
-     * 读取文件的修改时间
+     读取文件的修改时间
      *
-     * @param f
+     *j @param
      * @return
      */
-    public static String getModifiedTime(File f) {//读取文件的修改时间
+    public static String getModifiedTime(String path) {//读取文件的修改时间
+        File f=new File(path);
         Calendar cal = Calendar.getInstance();
         long time = f.lastModified();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
