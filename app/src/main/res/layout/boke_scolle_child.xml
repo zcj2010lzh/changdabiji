@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/boke_bokeming"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:textSize="30sp"
+            android:text="aufhuehf"
+            android:layout_marginStart="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="18dp">
+            <TextView
+                android:text="3天前"
+                android:layout_marginStart="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/boke_time">
+            </TextView>
+            <View
+                android:layout_gravity="center"
+                android:layout_width="2dp"
+                android:background="#000000"
+                android:layout_marginStart="30dp"
+                android:layout_height="16dp">
+            </View>
+            <TextView
+                android:text="阅读时间6分钟"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/boke_yuedushijian">
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/touxiang">
+        </de.hdodenhof.circleimageview.CircleImageView>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/boke_mingzhi"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:minWidth="24dp"
+                android:text="李子"
+                android:textSize="6sp">
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="16dp"
+                    android:layout_height="match_parent"
+                    android:background="#1BAD20"
+                    android:gravity="center"
+                    android:text="博客"
+                    android:textColor="#F5ECEC"
+                    android:textSize="5sp"
+                    tools:ignore="NestedWeights">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="16dp"
+                    android:layout_height="match_parent"
+
+                    android:background="#236426"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="#F5ECEC"
+                    android:textSize="8sp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+            <Button
+
+                android:id="@+id/boke_sixin"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center"
+                android:text="私信"
+                android:textSize="12sp">
+
+            </Button>
+
+            <Button
+
+                android:id="@+id/boke_guanzhu"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:text="关注"
+                android:textSize="12sp"
+                tools:ignore="ButtonStyle">
+            </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+</LinearLayout>

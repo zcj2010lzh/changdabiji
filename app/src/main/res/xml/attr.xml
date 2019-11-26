@@ -1,0 +1,5 @@
+<declare-styleable name="NightMode">
+    <attr name="day_night_background" format="color" />
+    <attr name="day_night_item_background" format="color" />
+    <attr name="day_night_text_color" format="color" />
+</declare-styleable>

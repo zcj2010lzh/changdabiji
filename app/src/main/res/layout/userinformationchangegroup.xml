@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RadioGroup
+    android:id="@+id/change_user_ingormation_group_radio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RadioButton
+        android:id="@+id/anzhuo"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="安卓组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+    <RadioButton
+        android:id="@+id/yunying"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="运营组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+    <RadioButton
+        android:id="@+id/yunwei"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="运维组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+    <RadioButton
+        android:id="@+id/qianduan"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="前端组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+    <RadioButton
+        android:id="@+id/php"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="PHP组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+    <RadioButton
+        android:id="@+id/ui"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:text="UI组"
+        android:layout_height="wrap_content">
+    </RadioButton>
+</RadioGroup>
+</LinearLayout>

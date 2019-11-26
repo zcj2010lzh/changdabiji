@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ZhuCe">
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:src="@drawable/undra"
+        android:layout_height="250dp">
+
+    </ImageView>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+           android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:background="@drawable/d"
+                    android:id="@+id/zuce_back"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginStart="36dp"
+                    android:layout_weight="10"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="18dp"
+                            android:src="@drawable/ic_account_circle_black_48dp"
+                            android:contentDescription="TODO">
+                        </ImageView>
+                        <EditText
+                            android:id="@+id/yonghuxuehao_edit"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="账号"
+                            android:layout_marginStart="12dp"
+                            android:layout_height="match_parent" >
+
+                        </EditText>
+                    </LinearLayout>
+                </FrameLayout>
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:background="@drawable/d"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginStart="36dp"
+                    android:layout_weight="10"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="18dp"
+                            android:src="@drawable/ic_vpn_key_black_48dp">
+                        </ImageView>
+                        <EditText
+
+                            android:id="@+id/yonghu_mima_edit"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="密码"
+                            android:layout_marginStart="12dp"
+                            android:layout_height="match_parent" >
+
+                        </EditText>
+                        <ImageView
+                            android:id="@+id/mimaisvisable"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/visable">
+
+                        </ImageView>
+                    </LinearLayout>
+                </FrameLayout>
+            </TableRow>
+
+        </TableLayout>
+        <LinearLayout
+            android:layout_marginTop="17dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+
+                android:background="@drawable/s"
+                android:layout_marginEnd="36dp"
+                android:layout_marginStart="36dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:text="登录"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:id="@+id/denglu"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginStart="30dp"
+                android:textColor="#000000"
+                android:text="没有账号？"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_marginStart="0dp"
+                android:textColor="#0F26AC"
+                android:text="点击注册"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yonghuzhuce_zhuce"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
