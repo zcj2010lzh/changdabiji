@@ -173,7 +173,7 @@ public class ZhuCe extends AppCompatActivity {
                                                 startActivity(intent);
                                                 finish();
                                             } else
-                                                Toast.makeText(ZhuCe.this, "用户名不存在密码错误", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ZhuCe.this, "用户不存在密码错误", Toast.LENGTH_SHORT).show();
                                             ;}
 
                                     });

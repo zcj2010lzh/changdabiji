@@ -7,47 +7,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistoryHandind">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/historyHanding_recycler"
-            android:layout_width="match_parent"
-            android:visibility="visible"
-            android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
 
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/internetwrong"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_centerInParent="true"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/internewrongt"
-                    android:textColor="#7C6262">
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="网络错误......"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
-                    android:textSize="13sp"
-                    android:textColor="#000000"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-        </RelativeLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/historyHanding_smartrefresh"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyHanding_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+        </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
+            android:id="@+id/internetwrong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/historyHanding_imgview"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/internewrongt"
+                android:textColor="#7C6262">
+
+            </ImageView>
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/historyHanding_imgview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:text="网络错误......"
+                android:textColor="#000000"
+                android:textSize="13sp">
+
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

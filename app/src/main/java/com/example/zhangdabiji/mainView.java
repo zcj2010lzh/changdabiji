@@ -45,13 +45,14 @@ public class mainView extends Fragment {
     private int[] bili = new int[6];
     private RecyclerView recyclerView;
     private MainViewAdapter adapter;
+    protected static String week;
     public static   SharedPreferences preferences;
    public  static     SharedPreferences.Editor editor;
     public  static String thisday=null;
-    private long startingtime;
+   // private long startingtime;
     Boolean isfresh=false;
     private String mainview_maxweek="0";
-    private long todaytime;
+    public  static   SmartRefreshLayout  refreshLayout;
     private  final   String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
     public  static String thisweek;
     private static String[]  group=new String[]{"安卓组7","运维组3","运营组3","前端组3","UI组3","PHP组4"};
@@ -76,7 +77,7 @@ public class mainView extends Fragment {
         thisday=weekDays[calendar.get(Calendar.DAY_OF_WEEK)-1];
         editor.apply();
         thisweek= preferences.getString("week","-1");
-        final SmartRefreshLayout refreshLayout=view.findViewById(R.id.mainview_smartrefresh);
+        refreshLayout=view.findViewById(R.id.mainview_smartrefresh);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -137,7 +138,7 @@ public class mainView extends Fragment {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         final String responsedata = response.body().string();
-                       // Log.d(TAG, "onResponse: "+responsedata);
+                        Log.d(TAG, "onResponse: "+responsedata);
                         try {
                             final JSONArray array = new JSONArray(responsedata);
                             for (int i = 0; i < array.length(); i++) {
@@ -146,7 +147,7 @@ public class mainView extends Fragment {
                                 String file_type = object.getString("file_type");
                                 String ispublic=object.getString("is_public");
                                 String url = "http://47.103.205.169" + object.getString("file");
-                                String week = object.getString("week");
+                                week = object.getString("week");
                                 ArrayList<Weekly_sketle> items = new ArrayList<>();
                                 if (Integer.parseInt(week)>Integer.parseInt(mainview_maxweek))
                                     mainview_maxweek=week;

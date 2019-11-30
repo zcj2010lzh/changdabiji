@@ -19,7 +19,7 @@ android {
         }
 
         applicationId "com.example.zhangdabiji"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "2.0"
@@ -62,6 +62,9 @@ dependencies {
     implementation 'com.lzy.net:okgo:3.0.4'
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:23.4.0'
+    // implementation 'com.huangdali:mricheditor:1.0.1'
+    //implementation 'com.huangdali:myhttputils:2.0.2'
+    implementation 'com.github.yuruiyin:RichEditor:0.1.0'
 
 }
 repositories {
@@ -76,5 +79,6 @@ allprojects {
     }
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://jitpack.io' }
     }
 }

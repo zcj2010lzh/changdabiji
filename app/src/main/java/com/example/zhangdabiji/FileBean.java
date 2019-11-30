@@ -3,10 +3,20 @@ public class FileBean { //文件格式
     public String getPath() {
         return path;
     }
+
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
+    }
+
+    private  String filetype;
     public String getrealPath() {
         return  realpath;
     }
-    public String getFiledate() {
+    String getFiledate() {
         return  filedate;
     }
     public int getIconId() {
@@ -28,8 +38,9 @@ public class FileBean { //文件格式
 
     private  Boolean isCheched;
     private String filedate;
-    public FileBean(String path, int iconId,String realpath,String filedate,Boolean isCheched) {
+    public FileBean(String path, int iconId,String realpath,String filedate,Boolean isCheched,String filetype) {
         this.path = path;
+        this.filetype=filetype;
         this.isCheched=isCheched;
         this.realpath=realpath;
         this.iconId = iconId;

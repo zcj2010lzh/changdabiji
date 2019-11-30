@@ -111,6 +111,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
                     FileBean file = mfileList.get(position);
                     Intent intent = new Intent(view.getContext(), WendangJiazaiyemian.class);
                     intent.putExtra("fileurl", file.getrealPath());
+                    intent.putExtra("filetype", file.getFiletype());
                     view.getContext().startActivity(intent);
                 }
             }

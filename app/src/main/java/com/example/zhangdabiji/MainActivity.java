@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -44,10 +45,21 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.example.zhangdabiji.Yonghuyemian.userloadcount;
 import static com.example.zhangdabiji.Yonghuyemian.userunloadcount;
@@ -55,7 +67,7 @@ import static org.litepal.LitePalApplication.getContext;
 
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
-
+   String maxweek="0";
     LinearLayout  wendang,gaishu;
     private ViewPager vpager;
     public  static TextView  genduoshujutextView;
@@ -85,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     FileAdapter.ViewHolder holder;
     public  static   Toolbar toolbar ;
     View layout;
+ private    TextView textView;
+     DrawerLayout  drawerLayout;
     private static final String TAG = "MainActivity";
     //DrawerLayout drawerLayou;
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
       gailun=findViewById(R.id.gailan);
       usergroup_draw=findViewById(R.id.user_group_draw);
       username_draw=findViewById(R.id.user_name_draw);
-      final DrawerLayout drawerLayout=findViewById(R.id.main_drawlayout_new);
+    drawerLayout=findViewById(R.id.main_drawlayout_new);
       usericon_draw=findViewById(R.id.user_icon_draw);
         username_draw.setText(preferences.getString("username",""));
         usergroup_draw.setText(preferences.getString("usergroup",""));
@@ -165,8 +179,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
           public void onClick(View v) {
               if (!drawerLayout.isDrawerOpen(GravityCompat.START))
                   drawerLayout.openDrawer(GravityCompat.START);
-              if (layout!=null)
-                  layout.setClickable(false);
 
           }
       });
@@ -186,13 +198,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START))
-                    layout.setClickable(true);
+
+
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
+                if (userinfoemation!=null)
+                    userinfoemation.setBackgroundColor(getResources().getColor(R.color.grey));
             }
 
             @Override
@@ -230,6 +243,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                          startActivity(intent);
                      }
                  });
+                 view2.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         dialog.dismiss();
+                         Intent intent=new Intent(MainActivity.this,Markdownonline.class);
+                         startActivity(intent);
+                     }
+                 });
                  //初始化控件
                  //将布局设置给Dialog
                  dialog.setContentView(inflate);
@@ -262,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         //几个代表页面的常量
         //drawerLayou = findViewById(R.id.main_drawlayout);
      editor= PreferenceManager.getDefaultSharedPreferences( MainActivity.this).edit();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         if (ZhuCe.zuceActivity!=null)
        ZhuCe.zuceActivity.finish();
         gaishu.setOnClickListener(new View.OnClickListener() {
@@ -295,6 +316,56 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
               user.setBackground(drawable1);
           }
       });
+      textView=toolbar.findViewById(R.id.mainactivity_week);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象
+                Request request = new Request.Builder()
+                        .url(" http://47.103.205.169/api/all_summary/?token="+token)//请求接口。如果需要传参拼接到接口后面。
+                        .build();//创建Request 对象
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                            textView.setText("第"+preferences.getString("week","0")+"周各组周总结概览");
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        final String responsedata = response.body().string();
+                        Log.d(TAG, "onResponse: "+responsedata);
+                        try {
+                            final JSONArray array = new JSONArray(responsedata);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                String week = object.getString("week");
+                                if (Integer.parseInt(week) > Integer.parseInt(maxweek))
+                                    maxweek = week;
+                                Log.d(TAG, "onResponse: "+maxweek);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Integer.parseInt(maxweek)>0)
+                                textView.setText("第"+maxweek+"周各组周总结概览");
+                                else {
+                                    if (mainView.preferences!=null)
+                                    textView.setText("第"+mainView.preferences.getString("week","0")+"周各组周总结概览");
+                                }
+                            }
+                        });
+                    }
+
+                });
+
+            }
+
+        }).start();
       editor.putBoolean("yonghuiszhidongdenglu",true);
       editor.apply();
       mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -385,7 +456,19 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                            MainActivity.kejiantextView.setVisibility(View.INVISIBLE);
 
                    }
-                    toolbar.setVisibility(View.VISIBLE);
+                   if (toolbar!=null)
+                       toolbar.setVisibility(View.VISIBLE);
+                    if (userinfoemation!=null)
+                        userinfoemation.setBackgroundColor(getResources().getColor(R.color.grey));
+                    Bitmap oldBmp = BitmapFactory.decodeResource(MainActivity.this.getResources(),R.drawable.calender);
+
+                    Drawable drawable = new BitmapDrawable(oldBmp);
+                    Bitmap oldBmp1 = BitmapFactory.decodeResource(MainActivity.this.getResources(),R.drawable.ic_account_circle_black_48dp);
+
+                    Drawable drawable1 = new BitmapDrawable(oldBmp1);
+                    gailun.setBackground(drawable);
+
+                    user.setBackground(drawable1);
                     break;
                 case PAGE_TWO:
                     if (MainActivity.kejiantextView.getVisibility()==View.VISIBLE)
@@ -395,6 +478,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         genduoshujutextView.setVisibility(View.GONE);
                         if (userquitloading!=null)
                             userquitloading.setBackgroundColor(getResources().getColor(R.color.grey));
+                    Bitmap oldBmp3= BitmapFactory.decodeResource(MainActivity.this.getResources(),R.drawable.usernew);
+
+                    Drawable drawable3 = new BitmapDrawable(oldBmp3);
+                    Bitmap oldBmp4 = BitmapFactory.decodeResource(MainActivity.this.getResources(),R.drawable.ic_date_range_black_48dp);
+
+                    Drawable drawable4 = new BitmapDrawable(oldBmp4);
+                    user.setBackground(drawable3);
+
+                    gailun.setBackground(drawable4);
                     break;
             }
         }
@@ -420,7 +512,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 //                        }
 //                    }
 //                    else
-                    exit();
+                 if (drawerLayout.isDrawerOpen(GravityCompat.START))
+                     drawerLayout.closeDrawer(GravityCompat.START);
+                 else exit();
             }
         return false;
         }

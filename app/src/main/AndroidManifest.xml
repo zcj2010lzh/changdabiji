@@ -12,6 +12,7 @@
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:ignore="WrongManifestParent" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,6 +20,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+
         android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,17 +29,21 @@
         android:theme="@style/mynewtheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ChangePassword"
-           >
+        <activity android:name=".Markdownonline"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:launchMode="singleTask">
 
         </activity>
-        <activity android:name=".Notification">
-
-        </activity>
-        <activity android:name=".UserInformation"
-            android:theme="@style/mytheme"/>
+        <activity android:name=".mricheditor" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".Notification" />
+        <activity
+            android:name=".UserInformation"
+            android:theme="@style/mytheme" />
         <activity android:name=".HistoryHandind"
-          />
+            android:launchMode="singleTask">
+
+        </activity>
         <activity android:name=".Boke" />
 
         <meta-data
@@ -45,11 +51,12 @@
             android:resource="@xml/provider_paths" />
 
         <activity android:name=".Zhedieshitu" />
-        <activity android:name=".WendangYemian"
-           android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
         <activity
+            android:launchMode="singleTask"
+            android:name=".WendangYemian"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:launchMode="singleTask"
             android:name=".WendangJiazaiyemian"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -59,7 +66,6 @@
         <activity
             android:name=".Welcome"
             android:launchMode="singleTask"
-
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,6 +74,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:launchMode="singleTask"
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity

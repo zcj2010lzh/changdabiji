@@ -60,6 +60,7 @@ public class  WendangJiazaiyemian  extends AppCompatActivity implements TbsReade
     private static final String[][] MIME_MapTable = {{".doc", "application/msword"}};
     Context mcontext = WendangJiazaiyemian.this;
     ProgressDialog progressDialog;
+    private String filetype;
     TextView  textView;
     private String download =Environment.getExternalStorageDirectory().getAbsolutePath() + "/tencent/QQfile_recv";
     @Override
@@ -91,6 +92,7 @@ public class  WendangJiazaiyemian  extends AppCompatActivity implements TbsReade
     private void initDoc() {
        intent= getIntent();
         docUrl = intent.getStringExtra("fileurl");
+        filetype=intent.getStringExtra("filetype");
          name= docUrl.split("/");
          filename= name[name.length - 1];
         for(int i=0;i<filename.length();i++){
@@ -99,7 +101,7 @@ public class  WendangJiazaiyemian  extends AppCompatActivity implements TbsReade
                 break;
             }
         }
-        Toast.makeText(mcontext, docUrl, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(mcontext, docUrl, Toast.LENGTH_SHORT).show();
         //判断是否在本地/[下载/直接打开]
         File docFile = new File(docUrl);
         if (docFile.exists()){
@@ -267,7 +269,7 @@ public class  WendangJiazaiyemian  extends AppCompatActivity implements TbsReade
                                 .addFormDataPart("file", filename,
                                         RequestBody.create(MediaType.parse("multipart/form-data"), new File(docUrl)))
                                 .addFormDataPart("is_public", String.valueOf(ispub))
-                                .addFormDataPart("file_type","docx")
+                                .addFormDataPart("file_type",filetype)
                                 .addFormDataPart("title",x)
                                 .build();//传文件
 

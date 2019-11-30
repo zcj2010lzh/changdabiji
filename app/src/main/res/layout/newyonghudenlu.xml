@@ -150,7 +150,7 @@
                         android:dropDownWidth="wrap_content"
                         android:completionThreshold="1"
                         android:layout_weight="1"
-                        android:hint="组名"
+                        android:hint="组名(字母大写)"
                         android:layout_marginStart="12dp"
                         android:background="@null"
                         android:dropDownHeight="wrap_content"

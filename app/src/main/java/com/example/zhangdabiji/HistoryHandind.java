@@ -17,6 +17,8 @@ import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.smtt.sdk.QbSdk;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,9 +41,11 @@ public class HistoryHandind extends AppCompatActivity {
     String file_type;
     Boolean frommainview=false;
     HostoryHanding_adapter adapter;
-    SmartRefreshLayout refreshLayout;
+    SmartRefreshLayout history_refreshLayout;
     RelativeLayout relativeLayout;
     int position;
+    boolean isswap=true;
+   RecyclerView   recyclerView;
     private static final String TAG = "HistoryHandind";
    ArrayList<Weekly_sketle> weekly_sketles=new ArrayList<>();
     @Override
@@ -58,26 +62,28 @@ public class HistoryHandind extends AppCompatActivity {
             public void onViewInitFinished(boolean b) {
             }
         });
-        refreshLayout=findViewById(R.id.historyHanding_smartrefresh);
-        final RecyclerView recyclerView=findViewById(R.id.historyHanding_recycler);
+        history_refreshLayout=findViewById(R.id.historyHanding_smartrefresh);
+    recyclerView=findViewById(R.id.historyHanding_recycler);
         LinearLayoutManager layoutManager= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
        adapter=new HostoryHanding_adapter(weekly_sketles);
         recyclerView.setAdapter(adapter);
+        //final WebView webView=findViewById(R.id.historyHanding_wenview);
         relativeLayout=findViewById(R.id.internetwrong);
          adapter.setOnItemClickListener(new HostoryHanding_adapter.OnItemClickListener() {
              @Override
              public void onItemClick(View v, int position) {
-                 Boolean nengkan=false;
-                 Weekly_sketle sketle=weekly_sketles.get(position);
-                 if ((mainView.preferences.getString("username","").equals("flyingdigital"))||(mainView.preferences.getString("username","").equals("zcjlovelzh")))
-                     nengkan=true;
-                 if (mainView.preferences.getString("usergroup","").equals("运营组"))
-                     nengkan=true;
-                 if (sketle.getIspublic())
-                     nengkan=true;
-                 if (nengkan)
-                 docurl=downloadFile(sketle.getUrl(),sketle.getWeekly_name()+"."+sketle.getFile_type());
+                  Boolean nengkan=false;
+                  Weekly_sketle sketle=weekly_sketles.get(position);
+                  if ((mainView.preferences.getString("username","").equals("flyingdigital"))||(mainView.preferences.getString("username","").equals("zcjlovelzh")))
+                      nengkan=true;
+                  if (mainView.preferences.getString("usergroup","").equals("运营组"))
+                      nengkan=true;
+                  if (sketle.getIspublic())
+                      nengkan=true;
+                  if (nengkan)
+                      docurl=downloadFile(sketle.getUrl(),sketle.getWeekly_name()+"."+sketle.getFile_type());
+                 //Toast.makeText(HistoryHandind.this, ""+weekly_sketles.get(position).getFile_type(), Toast.LENGTH_SHORT).show();
                 // Toast.makeText(HistoryHandind.this, ""+nengkan, Toast.LENGTH_SHORT).show();
              }
          });
@@ -109,63 +115,7 @@ public class HistoryHandind extends AppCompatActivity {
           new Thread(new Runnable() {
               @Override
               public void run() {
-                  OkHttpClient client = new OkHttpClient();
-                  Request request1 = new Request.Builder()
-                          .url("http://47.103.205.169/api/summary/?token=" + MainActivity.token)
-                          .build();
-
-                  client.newCall(request1).enqueue(new Callback() {
-                      @Override
-                      public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                              runOnUiThread(new Runnable() {
-                                  @Override
-                                  public void run() {
-                                      relativeLayout.setVisibility(View.VISIBLE);
-                                      recyclerView.setVisibility(View.GONE);
-                                  }
-                              });
-
-                      }
-
-                      @Override
-                      public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                          final String responsedata = response.body().string();
-                          Log.d(TAG, ""+responsedata);
-                          try {
-                              final JSONArray array = new JSONArray(responsedata);
-                              for (int i = 0; i < array.length(); i++) {
-                                  JSONObject object = array.getJSONObject(i);
-                                  String title = object.getString("title");
-                                  file_type= object.getString("file_type");
-                                  String url = "http://47.103.205.169" + object.getString("file");
-                                  String week=object.getString("week");
-                                  weekly_sketles.add(new Weekly_sketle("第"+week+"周",title,url,file_type,true));
-                              }
-                          } catch (JSONException e) {
-                              e.printStackTrace();
-                          }
-                          runOnUiThread(new Runnable() {
-                              @Override
-                              public void run() {
-                                  adapter.notifyDataSetChanged();
-//                                  if (netChange.detectInternerState(HistoryHandind.this)){
-//                                      // T//oast.makeText(this, "true", Toast.LENGTH_SHORT).show();
-//                                  }
-//                                  else {
-//
-//                                      relativeLayout.setVisibility(View.VISIBLE);
-//                                      recyclerView.setVisibility(View.GONE);
-//                                  }
-//
-                                  if (relativeLayout.getVisibility()==View.VISIBLE&&weekly_sketles.size()>0){
-                                      relativeLayout.setVisibility(View.GONE);
-                                      recyclerView.setVisibility(View.VISIBLE);
-                                  }
-                              }
-                          });
-                      }
-                  });
-
+                  search();
               }
           }).start();
       }else {
@@ -179,7 +129,27 @@ public class HistoryHandind extends AppCompatActivity {
 //            relativeLayout.setVisibility(View.VISIBLE);
 //            recyclerView.setVisibility(View.GONE);
 //        }
-
+        history_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                if (!frommainview){
+                    isswap=false;
+                    weekly_sketles.clear();
+                    search();
+                    isswap=true;
+                }
+                else {
+                mainView.refreshLayout.autoRefresh();
+                adapter.notifyDataSetChanged();
+                }
+                if (refreshlayout.isRefreshing())
+                    refreshlayout.finishRefresh(350);
+            }
+        });
+      if (!netChange.detectInternerState(HistoryHandind.this)){
+         recyclerView.setVisibility(View.GONE);
+          relativeLayout.setVisibility(View.VISIBLE);
+      }
     }
     private String  downloadFile(final String address, final String filename){
         File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/tencent/QQfile_recv", filename);
@@ -203,13 +173,15 @@ public class HistoryHandind extends AppCompatActivity {
                         .execute(new FileCallback(Environment.getExternalStorageDirectory().getAbsolutePath() +"/tencent/QQfile_recv",filename) {
                             @Override
                             public void onSuccess(Response<File> response) {
-                                if (docurl!="") {
-                                    ProgressShow.closeProgressDialog(progressDialog);
-                                    Intent intent = new Intent(HistoryHandind.this, WendangJiazaiyemian.class);
-                                    intent.putExtra("isDeleting",true);
-                                    intent.putExtra("fileurl", docurl);
-                                    startActivity(intent);
-                                }
+                             if (isswap){
+                                 if (docurl!="") {
+                                     ProgressShow.closeProgressDialog(progressDialog);
+                                     Intent intent = new Intent(HistoryHandind.this, WendangJiazaiyemian.class);
+                                     intent.putExtra("isDeleting",true);
+                                     intent.putExtra("fileurl", docurl);
+                                     startActivity(intent);
+                                 }
+                             }
                             }
                             @Override
                             public void downloadProgress(Progress progress) {
@@ -226,6 +198,57 @@ public class HistoryHandind extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+    }
+    private  void  search(){
+        OkHttpClient client = new OkHttpClient();
+        Request request1 = new Request.Builder()
+                .url("http://47.103.205.169/api/summary/?token=" + MainActivity.token)
+                .build();
+
+        client.newCall(request1).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                final String responsedata = response.body().string();
+                Log.d(TAG, ""+responsedata);
+                try {
+                    final JSONArray array = new JSONArray(responsedata);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+                        String title = object.getString("title");
+                        file_type= object.getString("file_type");
+                        String url = "http://47.103.205.169" + object.getString("file");
+                        String week=object.getString("week");
+                        weekly_sketles.add(new Weekly_sketle("第"+week+"周",title,url,file_type,true));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+//                                  if (netChange.detectInternerState(HistoryHandind.this)){
+//                                      // T//oast.makeText(this, "true", Toast.LENGTH_SHORT).show();
+//                                  }
+//                                  else {
+//
+//                                      relativeLayout.setVisibility(View.VISIBLE);
+//                                      recyclerView.setVisibility(View.GONE);
+//                                  }
+//
+                        if (relativeLayout.getVisibility()==View.VISIBLE&&weekly_sketles.size()>0){
+                            relativeLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        });
 
     }
 }

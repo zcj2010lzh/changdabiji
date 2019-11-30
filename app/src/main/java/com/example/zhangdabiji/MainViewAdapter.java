@@ -4,7 +4,7 @@ package com.example.zhangdabiji;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,7 +61,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.MainHo
 
     static class MainHolder extends RecyclerView.ViewHolder{
         TextView groupName,biLi;
-        SeekBar bar;
+        ProgressBar bar;
         MainHolder(@NonNull View itemView) {
             super(itemView);
            groupName=itemView.findViewById(R.id.mainview_groupname);

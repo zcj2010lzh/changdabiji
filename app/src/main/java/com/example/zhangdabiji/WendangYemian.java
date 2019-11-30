@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
@@ -34,6 +33,8 @@ public class WendangYemian extends AppCompatActivity {
    List <FileBean> fileList = new ArrayList<>();
    static   FileAdapter adapter;
     static Boolean  danxuam=true;
+    String filetype1;
+    private static final String TAG = "WendangYemian";
   static   Boolean swipe=true;
   public static   FloatingActionButton floatingActionButton;
    static RecyclerView recyclerView;
@@ -167,18 +168,18 @@ public class WendangYemian extends AppCompatActivity {
         // 扫描files文件库
 
         Cursor c = null;
+        Cursor c1=null;
         try {
             FileManager.getInstance(getContext(). getApplicationContext());
             String[] columns = new String[] {MediaStore.Files.FileColumns._ID,MediaStore.Files.FileColumns.MIME_TYPE,MediaStore.Files.FileColumns.SIZE,MediaStore.Files.FileColumns.DATE_MODIFIED,MediaStore.Files.FileColumns.DATA };
 
-            String select = "(" + MediaStore.Files.FileColumns.DATA + " LIKE '%.doc'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.docx'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.xls'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.ppt'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.txt'" + ")";
+            String select = "(" + MediaStore.Files.FileColumns.DATA + " LIKE '%.doc'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.docx'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.xls'" + " or "+ MediaStore.Files.FileColumns.DATA + " LIKE '%.pdf'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.ppt'" + " or " + MediaStore.Files.FileColumns.DATA + " LIKE '%.txt'" + ")";
 
             c = mContentResolver.query(MediaStore.Files.getContentUri("external"),columns, select, null, null);
             int dataindex = c.getColumnIndex(MediaStore.Files.FileColumns.DATA);
             //int sizeindex = c.getColumnIndex(MediaStore.Files.FileColumns.SIZE);
             while (c.moveToNext()) {
                 String path = c.getString(dataindex);
-
                 if (FileUtil.getFileType(path) == fileType) {
                     if (!FileUtil.isExists(path)) {
                         continue;
@@ -186,32 +187,25 @@ public class WendangYemian extends AppCompatActivity {
 
 
                     String [] name=path.split("/");
-                    FileBean fileBean = new FileBean(name[name.length-1], FileUtil.getFileIconByPath(path),path,FileUtil.getModifiedTime(path),false);
-                    files.add(fileBean);
-                }
-            }
-            c = mContentResolver.query(MediaStore.Files.getContentUri(Environment.getExternalStorageDirectory().getAbsolutePath()+"/tencent/QQfile_recv"),columns, select, null, null);
-            int datainde = c.getColumnIndex(MediaStore.Files.FileColumns.DATA);
-            //int sizeindex = c.getColumnIndex(MediaStore.Files.FileColumns.SIZE);
-            while (c.moveToNext()) {
-                String path = c.getString(datainde);
-
-                if (FileUtil.getFileType(path) == fileType) {
-                    if (!FileUtil.isExists(path)) {
-                        continue;
+                    for(int i=0;i<name[name.length-1].length();i++){
+                        if (name[name.length-1].toCharArray()[i]=='.'){
+                            filetype1=name[name.length-1].substring(i+1,name[name.length-1].length());
+                            break;
+                        }
                     }
-
-
-                    String [] name=path.split("/");
-                    FileBean fileBean = new FileBean(name[name.length-1], FileUtil.getFileIconByPath(path),path,FileUtil.getModifiedTime(path),false);
+                    FileBean fileBean = new FileBean(name[name.length-1], FileUtil.getFileIconByPath(path),path,FileUtil.getModifiedTime(path),false,filetype1);
                     files.add(fileBean);
                 }
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (c != null) {
                 c.close();
+                if (c1!=null)
+                    c1.close();
             }
         }
         return files;

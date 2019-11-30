@@ -26,8 +26,9 @@ public class FileUtil {
 
     public static int getFileType(String path) {
         path = path.toLowerCase();//变成小写
-        if (path.endsWith(".doc") || path.endsWith(".docx")  /*path.endsWith(".xls") || path.endsWith(".xlsx")
-                || path.endsWith(".type_ppt") || path.endsWith(".pptx")*/) {
+        if (path.endsWith(".doc") || path.endsWith(".docx") /*||path.endsWith(".html")|| path.endsWith(".pdf")|| path.endsWith(".xls") || path.endsWith(".xlsx")*/
+        )//|| path.endsWith(".pdf"))
+        {
             return TYPE_DOC;
         }else if (path.endsWith(".apk")) {
             return TYPE_APK;
@@ -43,19 +44,21 @@ public class FileUtil {
    public static int getFileIconByPath(String path){
         path = path.toLowerCase();
         int iconId = R.mipmap.unknow_file_icon;
-        if (path.endsWith(".type_txt")){
+        if (path.endsWith(".txt")){
             iconId = R.mipmap.type_txt;
         }else if(path.endsWith(".doc") || path.endsWith(".docx")){
             iconId = R.mipmap.type_doc;
         }else if(path.endsWith(".xls") || path.endsWith(".xlsx")){
             iconId = R.mipmap.type_xls;
-        }else if(path.endsWith(".type_ppt") || path.endsWith(".pptx")){
+        }else if(path.endsWith(".ppt") || path.endsWith(".pptx")){
             iconId = R.mipmap.type_ppt;
         }else if(path.endsWith(".type_xml")){
             iconId = R.mipmap.type_xml;
-        }else if(path.endsWith(".htm") || path.endsWith(".type_html")){
+        }else if(path.endsWith(".html")){
             iconId = R.mipmap.type_html;
         }
+        else if(  path.endsWith(".pdf")){
+            iconId = R.drawable.pdf;}
         return iconId;
     }
 

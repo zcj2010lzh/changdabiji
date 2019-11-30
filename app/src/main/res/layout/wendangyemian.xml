@@ -30,9 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
             android:layout_weight="1"
-        android:background="#0000"
-        app:srlPrimaryColor="#0000"
-        app:srlEnablePreviewInEditMode="true">
+       >
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
         <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
            <com.scwang.smartrefresh.layout.header.ClassicsHeader

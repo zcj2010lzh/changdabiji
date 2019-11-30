@@ -1,6 +1,7 @@
 package com.example.zhangdabiji;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -24,6 +27,7 @@ public class ChangePassword extends AppCompatActivity {
   String vertification_code;
     EditText newPassword;
    EditText findpassword_email;
+    private static final String TAG = "ChangePassword";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,37 +43,53 @@ public class ChangePassword extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestBody body1=new FormBody.Builder()
-                                .add("email",findpassword_email.getText().toString())
-                                .build();
-                        final Request request1=new Request.Builder()
-                                .post(body1)
-                                .url("http://47.103.205.169/api/recover_password_email/")
-                                .build();
+                        if (!findpassword_email.getText().toString().contains("@")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ChangePassword.this, "邮箱错误", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            });
+                        } else {
+                            RequestBody body1 = new FormBody.Builder()
+                                    .add("email", findpassword_email.getText().toString())
+                                    .build();
+                            final Request request1 = new Request.Builder()
+                                    .post(body1)
+                                    .url("http://47.103.205.169/api/recover_password_email/")
+                                    .build();
 //                        Log.d(TAG, "run: "+youxiang.getText().toString());
-                        OkHttpClient client=new OkHttpClient();
-                        client.newCall(request1).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(ChangePassword.this, "获取验证码失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                            OkHttpClient client = new OkHttpClient();
+                            client.newCall(request1).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(ChangePassword.this, "获取验证码失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
 
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                vertification_code=response.body().string();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(ChangePassword.this, "获取验证码成功"+vertification_code, Toast.LENGTH_SHORT).show();
+                                @Override
+                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                   String x=response.body().string();
+                                    try {
+                                        JSONObject object=new JSONObject(x);
+                                        vertification_code=object.getString("verification_code");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                });
-                            }
-                        });
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(ChangePassword.this, "获取验证码成功" , Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
                 }).start();
             }
@@ -77,7 +97,10 @@ public class ChangePassword extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (findpassword_edit.getText().toString().equals(vertification_code))
                 sendFindpasswordRequest(findpassword_email.getText().toString());
+                else Toast.makeText(ChangePassword.this, "证码错误", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: "+findpassword_edit.getText().toString()+""+vertification_code);
             }
         });
     }
@@ -95,7 +118,6 @@ public class ChangePassword extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(ChangePassword.this, "获取验证码失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override

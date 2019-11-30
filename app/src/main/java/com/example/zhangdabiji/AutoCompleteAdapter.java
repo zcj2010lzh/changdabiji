@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,17 +16,17 @@ public class AutoCompleteAdapter<T> extends BaseAdapter implements Filterable {
         private Context context;
         private ArrayList data = new ArrayList<>();
        AutoCompleteAdapter(ArrayList<String>  list, Context context){
-           context=context;
+          this. context=context;
            dataSource=list;
        }
         @Override
         public int getCount() {
-            return dataSource.size();
+        return  data.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return dataSource.get(position);
+            return data.get(position);
         }
 
         @Override
@@ -35,31 +36,26 @@ public class AutoCompleteAdapter<T> extends BaseAdapter implements Filterable {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view=null;
-         ViewHolder holder;
+            TextView textView;
+
             if(convertView==null){
-                view = View.inflate(context, R.layout.item_info_dict, null);
+               textView=new TextView(context);
 
-               holder=new ViewHolder();
-//              holder.tv_input_code = (TextView) view.findViewById(R.id.tv_input_code);
-                holder.tv_item_name = (TextView) view.findViewById(R.id.tv_item_name);
-
-                view.setTag(holder);
             }else{
-                view = convertView;
-                holder =(ViewHolder)  view.getTag();
+                textView = (TextView) convertView;
             }
 
 //          HashMap<String, String> pc = mList.get(position);
-            String pc=dataSource.get(position);
 
 //          holder.tv_input_code.setText("code："+pc.get("input_code"));
 //          holder.tv_item_name.setText("item_name："+pc.get("item_name"));
 
+            LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 90);
+            ip.leftMargin=30;
+            textView.setLayoutParams(ip);
 
-            holder.tv_item_name.setText(pc);
-
-            return view;
+       textView.setText(dataSource.get(position));
+            return textView;
 
         }
 
@@ -71,10 +67,11 @@ public class AutoCompleteAdapter<T> extends BaseAdapter implements Filterable {
                     FilterResults results = new FilterResults();
                     ArrayList<String> newData = new ArrayList<>();
                         for(String data : dataSource){
-                            if(data.contains(constraint.toString())){
+                            if(data.contains(constraint))
                             newData.add(data);
-                        }
                     }
+                        if (newData.size()<=0)
+                        newData.add(dataSource.get(0));
                     results.values = newData;
                     results.count = newData.size();
                     return results;
@@ -90,7 +87,9 @@ public class AutoCompleteAdapter<T> extends BaseAdapter implements Filterable {
     class ViewHolder{
         public TextView tv_input_code;
         public TextView tv_item_name;
-    }
+    }//            LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 90);
+//            ip.leftMargin=30;
+//            textView.setLayoutParams(ip);
 
 }
 
